@@ -6,16 +6,17 @@
 #include <unistd.h>
 
 void coordinador(int hijos, char *input, int cantidadCaracteres, char *cadena){
-  int i;
+  int i, status;
   pid_t pid;
-  char *argv[] = {"a", "-l", NULL};
+  char *argv[] = {"holaMundo", "-l", NULL};
   /*Se crean los hijos y se les asigna la ejecución de un programa comparador.
   Al terminar este procedimiento, el proceso padre (el programa organizador) contará con N hijos.*/
   for(i = 0; i < hijos; i++){
     if((pid = fork()) != 0){ //Caso del padre
       printf("Soy el padre de pid %d\n", getpid());
+      wait(&status);
     }
-    else{ //Caso del hijo
+    else{ //Caso del hijo. Ejecuta el proceso "holaMundo".
       execv(argv[0], argv);
       exit(0);
     }
